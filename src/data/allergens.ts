@@ -1,0 +1,16 @@
+export const ALLERGENS_SK: Record<number, string> = {
+  1: "Obilniny",
+  2: "Kôrovce",
+  3: "Vajcia",
+  4: "Ryby",
+  5: "Arašídy",
+  6: "Sója",
+  7: "Mlieko",
+  8: "Orechy",
+  9: "Zeler",
+  10: "Horčica",
+  11: "Sezam",
+  12: "SO₂ a siričitany",
+  13: "Vlčí bôb",
+  14: "Mäkkýše",
+};
