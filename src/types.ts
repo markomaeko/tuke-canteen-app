@@ -1,4 +1,5 @@
-export type CanteenSlug = "jedalen-jedlikova-7" | "jedalen-nemcovej-1" | "bistro-urbankova-2" | "bistro-zp-nemcovej-9" | "jedalen-budovatelska-31-presov" | "pizzeria-forte-jedlikova-7" | "libresso-nemcovej-7";
+import type { CanteenSlug } from "./constants";
+
 export type ISODate = string;
 
 export type MenuItem = {

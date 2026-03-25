@@ -9,9 +9,13 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "sk.tuke.canteenapp",
+      "buildNumber": "1"
     },
     "android": {
+      "package": "sk.tuke.canteenapp",
+      "versionCode": 1,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

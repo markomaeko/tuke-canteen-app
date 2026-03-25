@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { CANTEENS } from "../src/data/canteens";
-import type { CanteenSlug } from "../src/types/menu";
+import { CANTEENS } from "../src/constants";
+import type { CanteenSlug } from "../src/constants";
 
 export function CanteenPicker({
   value,

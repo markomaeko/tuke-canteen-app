@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import type { CanteenSlug } from "../types/menu";
+import type { CanteenSlug } from "../constants";
 
 export type AppSettings = {
   defaultCanteen: CanteenSlug;

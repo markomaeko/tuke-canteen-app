@@ -53,7 +53,7 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-container: { padding: 16, backgroundColor: "#fafafa", gap: 14 },
+  container: { padding: 16, backgroundColor: "#fafafa", gap: 14 },
   h1: { fontSize: 22, fontWeight: "900", color: "#111" },
   sectionTitle: { marginTop: 6, fontSize: 14, fontWeight: "900", color: "#111" },
   row: {

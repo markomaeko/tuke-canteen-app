@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import type { MenuSection as MenuSectionType } from "../src/types/menu";
+import type { MenuSection as MenuSectionType } from "../src/types";
 import { MealCard } from "./MealCard";
 
 type Props = {
@@ -21,9 +21,9 @@ export function MenuSection({ section, showAllergens, showEmpty = false }: Props
       {section.items.length === 0 ? (
         <Text style={styles.empty}>Žiadne položky</Text>
       ) : (
-        section.items.map((item, idx) => (
+        section.items.map((item) => (
           <MealCard
-            key={`${item.id}-${idx}`}
+            key={item.id}
             item={item}
             showAllergens={showAllergens}
           />

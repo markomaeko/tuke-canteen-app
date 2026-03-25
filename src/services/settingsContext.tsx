@@ -14,10 +14,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    loadSettings().then((s) => {
-      setSettings(s);
-      setReady(true);
-    });
+    loadSettings()
+      .then((s) => setSettings(s))
+      .catch((e) => console.error("Failed to load settings:", e))
+      .finally(() => setReady(true));
   }, []);
 
   const update = useCallback(async (patch: Partial<AppSettings>) => {

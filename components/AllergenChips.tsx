@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { ALLERGENS_SK } from "../src/data/allergens";
+import { ALLERGENS_SK } from "../src/constants";
 
 export function AllergenChips({ allergens }: { allergens: number[] }) {
   if (!allergens || allergens.length === 0) return null;

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ScrollView, View, Text, StyleSheet, RefreshControl, Switch } from "react-native";
-import type { CanteenMenuDay } from "../../src/types/menu";
+import type { CanteenMenuDay } from "../../src/types";
 import { getMenuDay } from "../../src/services/menuRepository";
 import { DayPicker } from "../../components/DayPicker";
 import { CanteenPicker } from "../../components/CanteenPicker";
@@ -8,7 +8,8 @@ import { LoadingState } from "../../components/LoadingState";
 import { ErrorState } from "../../components/ErrorState";
 import { MenuSection } from "../../components/MenuSection";
 import { useSettings } from "../../src/services/settingsContext";
-import { getNextWorkdays } from "../../src/utils/dates";
+import { getNextWorkdays } from "../../src/utils/format";
+import { SIDE_SECTION_TITLES } from "../../src/constants";
 import { Screen } from "../../components/Screen";
 
 export default function MenuScreen() {
@@ -67,7 +68,7 @@ export default function MenuScreen() {
     ? []
     : !onlyMainMeals
       ? menu.sections
-      : menu.sections.filter((s) => !["Nápoje", "Ostatné", "Prílohy"].includes(s.title));
+      : menu.sections.filter((s) => !(SIDE_SECTION_TITLES as readonly string[]).includes(s.title));
 
   const hasAnyItemsAfterFilter =
     filteredSections.length > 0 &&

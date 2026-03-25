@@ -1,5 +1,6 @@
 import { parse } from "node-html-parser";
-import type { CanteenMenuDay, MenuSection, MenuItem, ISODate, CanteenSlug } from "../types/menu";
+import type { CanteenMenuDay, MenuSection, MenuItem, ISODate } from "../types";
+import type { CanteenSlug } from "../constants";
 
 function parsePriceToNumber(priceText: string): number {
   const cleaned = priceText.replace("€", "").trim().replace(",", ".");
@@ -8,7 +9,7 @@ function parsePriceToNumber(priceText: string): number {
 }
 
 function uniqIdFromPopupOrName(popup: string | null, name: string, price: number): string {
-  // nepoužívaj slice – spôsobuje kolízie
+  // nepoužívaj slice na popup – spôsobuje kolízie; na fallback je OK
   if (popup && popup.length > 10) return popup;
 
   // fallback, keď popup nie je:

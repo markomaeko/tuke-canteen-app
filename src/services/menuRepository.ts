@@ -1,6 +1,7 @@
-import type { CanteenMenuDay, ISODate, CanteenSlug } from "../types/menu";
-import { fetchTukeMenuHtml } from "./tukeMenuClient";
-import { parseTukeMenuHtml } from "./tukeMenuParser";
+import type { CanteenMenuDay, ISODate } from "../types";
+import type { CanteenSlug } from "../constants";
+import { fetchTukeMenuHtml } from "./menuClient";
+import { parseTukeMenuHtml } from "./menuParser";
 
 export async function getMenuDay(canteenSlug: CanteenSlug, date: ISODate): Promise<CanteenMenuDay> {
   const html = await fetchTukeMenuHtml(canteenSlug, date);

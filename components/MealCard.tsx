@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import type { MenuItem } from "../src/types/menu";
+import type { MenuItem } from "../src/types";
+import { formatPrice } from "../src/utils/format";
 import { AllergenChips } from "./AllergenChips";
 
 type Props = {
@@ -14,7 +15,7 @@ export function MealCard({ item, showAllergens = true }: Props) {
       <View style={styles.row}>
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.price}>
-          {item.price.toFixed(2).replace(".", ",")} €
+          {formatPrice(item.price)}
         </Text>
       </View>
 
