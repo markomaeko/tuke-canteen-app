@@ -1,10 +1,17 @@
+import { Platform } from "react-native";
 import type { ISODate } from "../types";
 import type { CanteenSlug } from "../constants";
 
 const FETCH_TIMEOUT_MS = 15_000;
 
+/** URL CORS proxy servera pre web. Po nasadení na Render.com zmeň na produkčnú URL. */
+const WEB_PROXY_BASE_URL = "https://tuke-canteen-proxy.onrender.com";
+
 export async function fetchTukeMenuHtml(canteenSlug: CanteenSlug, date: ISODate): Promise<string> {
-  const url = `https://jedalen.tuke.sk/jedalny-listok/${canteenSlug}/${date}`;
+  const url =
+    Platform.OS === "web"
+      ? `${WEB_PROXY_BASE_URL}/menu/${canteenSlug}/${date}`
+      : `https://jedalen.tuke.sk/jedalny-listok/${canteenSlug}/${date}`;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
