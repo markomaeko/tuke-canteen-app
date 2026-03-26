@@ -44,10 +44,10 @@ const styles = StyleSheet.create({
     padding: 32,
     backgroundColor: "#fff",
   },
-  title: { fontSize: 20, fontWeight: "bold", marginBottom: 8 },
-  message: { fontSize: 15, color: "#555", textAlign: "center", marginBottom: 24 },
+  title: { fontSize: 20, fontWeight: "bold", marginBottom: 8, color: "#1A1A1A" },
+  message: { fontSize: 15, color: "#666", textAlign: "center", marginBottom: 24 },
   button: {
-    backgroundColor: "#111",
+    backgroundColor: "#1B3A5C",
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,

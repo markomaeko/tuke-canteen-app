@@ -77,6 +77,10 @@ export function parseTukeMenuHtml(
   const start = root.querySelector(".timeline li.start")?.getAttribute("data-time") ?? undefined;
   const end = root.querySelector(".timeline li.end")?.getAttribute("data-time") ?? undefined;
 
+  if (canteenName === "Neznáma jedáleň") {
+    throw new Error("Nepodarilo sa spracovať údaje z jedálne.");
+  }
+
   return {
     canteenName,
     canteenSlug: meta.canteenSlug,

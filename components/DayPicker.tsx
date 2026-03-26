@@ -1,5 +1,6 @@
 import React from "react";
 import { ScrollView, Pressable, Text, StyleSheet, View } from "react-native";
+import { useAppTheme } from "../src/theme";
 
 type DayOption = { iso: string; label: string; dateLabel: string };
 
@@ -12,6 +13,8 @@ export function DayPicker({
   value: string;
   onChange: (iso: string) => void;
 }) {
+  const { colors } = useAppTheme();
+
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.row}>
       {days.map((d) => {
@@ -20,32 +23,49 @@ export function DayPicker({
           <Pressable
             key={d.iso}
             onPress={() => onChange(d.iso)}
-            style={[styles.pill, active && styles.pillActive]}
+            style={[
+              styles.chip,
+              {
+                backgroundColor: active ? colors.pillActiveBg : colors.pillBg,
+                borderColor: active ? colors.pillActiveBg : colors.pillBorder,
+              },
+            ]}
           >
-            <Text style={[styles.label, active && styles.labelActive]} numberOfLines={1}>{d.label}</Text>
-            <Text style={[styles.date, active && styles.dateActive]}>{d.dateLabel}</Text>
+            <Text
+              style={[
+                styles.label,
+                { color: active ? colors.pillActiveText : colors.text },
+              ]}
+              numberOfLines={1}
+            >
+              {d.label}
+            </Text>
+            <Text
+              style={[
+                styles.date,
+                { color: active ? (colors.pillActiveText + "CC") : colors.textSecondary },
+              ]}
+            >
+              {d.dateLabel}
+            </Text>
           </Pressable>
         );
       })}
-      <View style={{ width: 6 }} />
+      <View style={{ width: 8 }} />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  row: { gap: 10, paddingRight: 16 },
-  pill: {
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: 14,
-    backgroundColor: "#fff",
+  row: { gap: 8, paddingHorizontal: 16 },
+  chip: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
     borderWidth: 1,
-    borderColor: "#eee",
-    minWidth: 120,
+    minWidth: 100,
+    alignItems: "center",
   },
-  pillActive: { backgroundColor: "#111", borderColor: "#111" },
-  label: { fontSize: 12, fontWeight: "800", color: "#111" },
-  labelActive: { color: "#fff" },
-  date: { marginTop: 2, fontSize: 12, color: "#555" },
-  dateActive: { color: "#ddd" },
+  label: { fontSize: 13, fontWeight: "700" },
+  date: { marginTop: 2, fontSize: 11, fontWeight: "500" },
 });

@@ -31,6 +31,3 @@ export const ALLERGENS: { short: string; full: string }[] = [
 export const ALLERGENS_SK: Record<number, string> = Object.fromEntries(
   ALLERGENS.map((a, i) => [i + 1, a.short]),
 );
-
-// Sekcie menu skryté filtrom „Iba hlavné jedlá"
-export const SIDE_SECTION_TITLES = ["Nápoje", "Ostatné", "Prílohy"] as const;

@@ -1,8 +1,10 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import type { MenuItem } from "../src/types";
 import { formatPrice } from "../src/utils/format";
 import { AllergenChips } from "./AllergenChips";
+import { useAppTheme } from "../src/theme";
 
 type Props = {
   item: MenuItem;
@@ -10,45 +12,80 @@ type Props = {
 };
 
 export function MealCard({ item, showAllergens = true }: Props) {
-  return (
-    <View style={styles.card}>
-      <View style={styles.row}>
-        <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.price}>
-          {formatPrice(item.price)}
-        </Text>
-      </View>
+  const { colors } = useAppTheme();
 
-      {showAllergens && item.allergens.length > 0 ? (
-        <AllergenChips allergens={item.allergens} />
-      ) : null}
+  return (
+    <View
+      style={[
+        styles.card,
+        {
+          backgroundColor: colors.card,
+          borderColor: colors.cardBorder,
+          shadowColor: colors.shadow,
+        },
+      ]}
+    >
+      <View style={styles.row}>
+        {/* Placeholder pre fotku jedla — nahraditeľný Image komponentom */}
+        <View style={[styles.photoPlaceholder, { backgroundColor: colors.surface }]}>
+          {item.photoUrl ? null : (
+            <Ionicons name="restaurant-outline" size={24} color={colors.textMuted} />
+          )}
+        </View>
+
+        <View style={styles.content}>
+          <Text style={[styles.name, { color: colors.text }]}>{item.name}</Text>
+          <View style={styles.metaRow}>
+            <Text style={[styles.price, { color: colors.accent }]}>
+              {formatPrice(item.price)}
+            </Text>
+          </View>
+          {showAllergens && item.allergens.length > 0 ? (
+            <AllergenChips allergens={item.allergens} />
+          ) : null}
+        </View>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
-    marginTop: 10,
-    padding: 12,
-    borderRadius: 14,
-    backgroundColor: "#fff",
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: "#eee",
+    padding: 12,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
   },
   row: {
     flexDirection: "row",
-    alignItems: "flex-start",
-    gap: 10,
+    gap: 12,
+  },
+  photoPlaceholder: {
+    width: 56,
+    height: 56,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  content: {
+    flex: 1,
   },
   name: {
-    flex: 1,
     fontSize: 14,
-    fontWeight: "700",
-    color: "#111",
+    fontWeight: "600",
+    lineHeight: 20,
+  },
+  metaRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginTop: 4,
   },
   price: {
     fontSize: 14,
     fontWeight: "800",
-    color: "#111",
   },
 });

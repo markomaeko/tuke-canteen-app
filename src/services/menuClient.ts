@@ -15,12 +15,18 @@ export async function fetchTukeMenuHtml(canteenSlug: CanteenSlug, date: ISODate)
     });
 
     if (!res.ok) {
-      throw new Error(`Failed to fetch menu: ${res.status} ${res.statusText}`);
+      if (res.status >= 500) {
+        throw new Error("Server jedálne je nedostupný. Skúste to neskôr.");
+      }
+      throw new Error("Nepodarilo sa načítať menu.");
     }
     return await res.text();
   } catch (e: unknown) {
     if (e instanceof DOMException && e.name === "AbortError") {
       throw new Error("Načítanie menu trvalo príliš dlho. Skúste to znova.");
+    }
+    if (e instanceof TypeError && e.message === "Network request failed") {
+      throw new Error("Nie je pripojenie k internetu.");
     }
     throw e;
   } finally {

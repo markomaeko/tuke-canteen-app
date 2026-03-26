@@ -1,50 +1,72 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Pressable, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import type { MenuSection as MenuSectionType } from "../src/types";
 import { MealCard } from "./MealCard";
+import { useAppTheme } from "../src/theme";
 
 type Props = {
   section: MenuSectionType;
   showAllergens: boolean;
-  showEmpty?: boolean;
 };
 
-export function MenuSection({ section, showAllergens, showEmpty = false }: Props) {
-  if (!showEmpty && (!section.items || section.items.length === 0)) {
+export function MenuSection({ section, showAllergens }: Props) {
+  const { colors } = useAppTheme();
+  const [collapsed, setCollapsed] = useState(false);
+
+  if (!section.items || section.items.length === 0) {
     return null;
   }
 
+  const itemCount = section.items.length;
+
   return (
     <View style={styles.block}>
-      <Text style={styles.title}>{section.title}</Text>
+      <Pressable
+        style={[styles.header, { borderBottomColor: colors.separator }]}
+        onPress={() => setCollapsed((v) => !v)}
+      >
+        <View style={styles.headerLeft}>
+          <Text style={[styles.title, { color: colors.text }]}>{section.title}</Text>
+          <Text style={[styles.count, { color: colors.textMuted }]}>
+            {itemCount} {itemCount === 1 ? "položka" : itemCount < 5 ? "položky" : "položiek"}
+          </Text>
+        </View>
+        <Ionicons
+          name={collapsed ? "chevron-down" : "chevron-up"}
+          size={18}
+          color={colors.textMuted}
+        />
+      </Pressable>
 
-      {section.items.length === 0 ? (
-        <Text style={styles.empty}>Žiadne položky</Text>
-      ) : (
-        section.items.map((item) => (
-          <MealCard
-            key={item.id}
-            item={item}
-            showAllergens={showAllergens}
-          />
-        ))
-      )}
+      {!collapsed ? (
+        <View style={styles.items}>
+          {section.items.map((item) => (
+            <MealCard key={item.id} item={item} showAllergens={showAllergens} />
+          ))}
+        </View>
+      ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  block: {
-    marginTop: 14,
+  block: { marginTop: 8 },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingVertical: 12,
+    paddingHorizontal: 4,
+    borderBottomWidth: 1,
   },
-  title: {
-    fontSize: 16,
-    fontWeight: "900",
-    color: "#111",
+  headerLeft: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "baseline",
+    gap: 8,
   },
-  empty: {
-    marginTop: 8,
-    fontStyle: "italic",
-    color: "#666",
-  },
+  title: { fontSize: 15, fontWeight: "800" },
+  count: { fontSize: 12, fontWeight: "500" },
+  items: { gap: 8, paddingTop: 8 },
 });

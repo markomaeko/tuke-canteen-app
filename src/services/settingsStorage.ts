@@ -1,18 +1,19 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import type { CanteenSlug } from "../constants";
+import type { ThemeMode } from "../theme";
 
 export type AppSettings = {
   defaultCanteen: CanteenSlug;
   showAllergens: boolean;
-  showEmptySections: boolean;
+  themeMode: ThemeMode;
 };
 
-const KEY = "tuke.settings.v1";
+const KEY = "tuke.settings.v2";
 
 export const DEFAULT_SETTINGS: AppSettings = {
   defaultCanteen: "jedalen-jedlikova-7",
   showAllergens: true,
-  showEmptySections: false,
+  themeMode: "system",
 };
 
 export async function loadSettings(): Promise<AppSettings> {
