@@ -16,7 +16,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     loadSettings()
       .then((s) => setSettings(s))
-      .catch((e) => console.error("Failed to load settings:", e))
+      .catch((e) => { if (__DEV__) console.error("Failed to load settings:", e); })
       .finally(() => setReady(true));
   }, []);
 

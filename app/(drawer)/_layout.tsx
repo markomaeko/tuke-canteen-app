@@ -15,11 +15,12 @@ const AVATAR_COLORS = [
 ] as const;
 
 function CanteenAvatar({ name, index, size = 40 }: { name: string; index: number; size?: number }) {
+  const { colors } = useAppTheme();
   const letter = name.charAt(0).toUpperCase();
   const bg = AVATAR_COLORS[index % AVATAR_COLORS.length];
   return (
     <View style={[styles.avatar, { width: size, height: size, borderRadius: size / 2, backgroundColor: bg }]}>
-      <Text style={[styles.avatarText, { fontSize: size * 0.4 }]}>{letter}</Text>
+      <Text style={[styles.avatarText, { fontSize: size * 0.4, color: colors.onPrimary }]}>{letter}</Text>
     </View>
   );
 }
@@ -50,7 +51,7 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
       {/* Hlavička */}
       <View style={[ds.header, { backgroundColor: colors.headerBg }]}>
         <View style={ds.headerRow}>
-          <TukeLogo size={28} color="#fff" />
+          <TukeLogo size={28} color={colors.headerText} />
           <Text style={ds.headerTitle}>TUKE Jedálne</Text>
         </View>
         <Text style={ds.headerSubtitle}>Technická univerzita v Košiciach</Text>
@@ -157,7 +158,7 @@ export default function DrawerLayout() {
 
 const styles = StyleSheet.create({
   avatar: { justifyContent: "center", alignItems: "center" },
-  avatarText: { color: "#fff", fontWeight: "800" },
+  avatarText: { fontWeight: "800" },
 });
 
 const drawerStyles = (c: ThemeColors) =>
@@ -169,8 +170,8 @@ const drawerStyles = (c: ThemeColors) =>
       paddingHorizontal: 20,
     },
     headerRow: { flexDirection: "row", alignItems: "center", gap: 10 },
-    headerTitle: { color: "#fff", fontSize: 20, fontWeight: "800" },
-    headerSubtitle: { color: "rgba(255,255,255,0.7)", fontSize: 12, marginTop: 4 },
+    headerTitle: { color: c.headerText, fontSize: 20, fontWeight: "800" },
+    headerSubtitle: { color: c.headerText, opacity: 0.7, fontSize: 12, marginTop: 4 },
     scroll: { flex: 1 },
     sectionLabel: {
       fontSize: 11,

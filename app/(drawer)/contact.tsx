@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ScrollView, Text, View, StyleSheet, TouchableOpacity, Linking } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Screen } from "../../components/Screen";
-import { useAppTheme } from "../../src/theme";
+import { useAppTheme, type ThemeColors } from "../../src/theme";
 import {
   MANAGEMENT_CONTACTS,
   CANTEEN_CONTACTS,
@@ -18,7 +18,7 @@ function openEmail(email: string) {
   Linking.openURL(`mailto:${email}`);
 }
 
-function HoursBlock({ label, entries, colors }: { label?: string; entries: HoursEntry[]; colors: any }) {
+function HoursBlock({ label, entries, colors }: { label?: string; entries: HoursEntry[]; colors: ThemeColors }) {
   return (
     <View style={styles.hoursBlock}>
       {label ? (

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { ScrollView, View, Text, StyleSheet, RefreshControl } from "react-native";
+import { AppState, ScrollView, View, Text, StyleSheet, RefreshControl } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import type { CanteenMenuDay, MenuSection as MenuSectionType } from "../../src/types";
 import { getMenuDay } from "../../src/services/menuRepository";
@@ -30,13 +30,35 @@ function reorderSections(sections: MenuSectionType[]): MenuSectionType[] {
   return normal;
 }
 
+function todayKey() {
+  const d = new Date();
+  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
+
 export default function MenuScreen() {
-  const days = useMemo(() => getNextWorkdays(5), []);
+  const [dateKey, setDateKey] = useState(todayKey);
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- dateKey invaliduje zoznam dní po polnoci
+  const days = useMemo(() => getNextWorkdays(5), [dateKey]);
   const { settings, ready } = useSettings();
   const { activeCanteen } = useActiveCanteen();
   const { colors } = useAppTheme();
 
   const [selectedDay, setSelectedDay] = useState(days[0].iso);
+
+  // Po polnoci: ak vybraný deň už nie je v zozname, resetni na prvý
+  useEffect(() => {
+    if (!days.some((d) => d.iso === selectedDay)) {
+      setSelectedDay(days[0].iso);
+    }
+  }, [days, selectedDay]);
+
+  // Aktualizuj deň pri návrate do popredia
+  useEffect(() => {
+    const sub = AppState.addEventListener("change", (state) => {
+      if (state === "active") setDateKey(todayKey());
+    });
+    return () => sub.remove();
+  }, []);
 
   const [menu, setMenu] = useState<CanteenMenuDay | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -49,8 +71,8 @@ export default function MenuScreen() {
     try {
       const m = await getMenuDay(activeCanteen, selectedDay);
       setMenu(m);
-    } catch (e: any) {
-      setError(e?.message ?? "Neznáma chyba");
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Neznáma chyba");
     }
   }, [activeCanteen, selectedDay]);
 
@@ -59,6 +81,7 @@ export default function MenuScreen() {
   }, [load]);
 
   const onRefresh = useCallback(async () => {
+    setDateKey(todayKey());
     setRefreshing(true);
     try {
       await load();

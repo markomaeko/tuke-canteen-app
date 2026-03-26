@@ -40,6 +40,7 @@ export type ThemeColors = {
   statusBoxBg: string;
   statusBoxBorder: string;
   statusBoxText: string;
+  onPrimary: string;
   switchTrack: string;
   icon: string;
   separator: string;
@@ -72,6 +73,7 @@ const lightColors: ThemeColors = {
   statusBoxBg: "#FFF5F5",
   statusBoxBorder: "#F3C7C7",
   statusBoxText: "#7A1F1F",
+  onPrimary: palette.white,
   switchTrack: palette.navy,
   icon: "#555555",
   separator: "#E8E8E8",
@@ -104,6 +106,7 @@ const darkColors: ThemeColors = {
   statusBoxBg: "#3A2020",
   statusBoxBorder: "#5A3030",
   statusBoxText: "#F0A0A0",
+  onPrimary: palette.white,
   switchTrack: "#4A7FB5",
   icon: "#AAAAAA",
   separator: "#333333",

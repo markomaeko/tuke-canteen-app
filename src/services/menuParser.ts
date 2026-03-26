@@ -47,11 +47,10 @@ export function parseTukeMenuHtml(
       // alergény (robustne)
       const alergensSpan = nameNode?.querySelector("span.alergens");
 
+      type TextAccessor = { textContent?: string; innerText?: string; rawText?: string };
+      const span = alergensSpan as TextAccessor | undefined;
       const alergensText = String(
-        (alergensSpan as any)?.textContent ??
-          (alergensSpan as any)?.innerText ??
-          (alergensSpan as any)?.rawText ??
-          ""
+        span?.textContent ?? span?.innerText ?? span?.rawText ?? ""
       );
 
       const allergens = (alergensText.match(/\d+/g) ?? [])

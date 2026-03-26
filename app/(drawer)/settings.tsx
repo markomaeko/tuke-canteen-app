@@ -50,12 +50,12 @@ export default function SettingsScreen() {
                   <Ionicons
                     name={opt.icon}
                     size={18}
-                    color={active ? "#fff" : colors.textSecondary}
+                    color={active ? colors.onPrimary : colors.textSecondary}
                   />
                   <Text
                     style={[
                       styles.themeLabel,
-                      { color: active ? "#fff" : colors.text },
+                      { color: active ? colors.onPrimary : colors.text },
                     ]}
                   >
                     {opt.label}

@@ -22,7 +22,7 @@ export default function AllergensScreen() {
             style={[styles.card, { backgroundColor: colors.card, borderColor: colors.cardBorder }]}
           >
             <View style={[styles.badge, { backgroundColor: colors.primary }]}>
-              <Text style={styles.badgeText}>{i + 1}</Text>
+              <Text style={[styles.badgeText, { color: colors.onPrimary }]}>{i + 1}</Text>
             </View>
             <View style={styles.textWrap}>
               <Text style={[styles.short, { color: colors.text }]}>{a.short}</Text>
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 2,
   },
-  badgeText: { color: "#fff", fontSize: 14, fontWeight: "800" },
+  badgeText: { fontSize: 14, fontWeight: "800" },
   textWrap: { flex: 1 },
   short: { fontSize: 14, fontWeight: "700" },
   full: { fontSize: 12, lineHeight: 18, marginTop: 2 },

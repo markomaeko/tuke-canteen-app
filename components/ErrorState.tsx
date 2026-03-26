@@ -16,7 +16,7 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
           style={[styles.btn, { backgroundColor: colors.accent }]}
           onPress={onRetry}
         >
-          <Text style={styles.btnText}>Skúsiť znova</Text>
+          <Text style={[styles.btnText, { color: colors.onPrimary }]}>Skúsiť znova</Text>
         </Pressable>
       ) : null}
     </View>
@@ -40,5 +40,5 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 8,
   },
-  btnText: { color: "#fff", fontWeight: "700", fontSize: 14 },
+  btnText: { fontWeight: "700", fontSize: 14 },
 });
