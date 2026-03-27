@@ -1,8 +1,10 @@
 # TUKE Canteen App
 
-A React Native mobile app that displays daily menus for TUKE (Technical University of Kosice) canteens. Built as a bachelor thesis MVP.
+A React Native mobile + web app that displays daily menus for TUKE (Technical University of Kosice) canteens. Built as a bachelor thesis MVP.
 
 Menu data is loaded by parsing the official canteen website ([jedalen.tuke.sk](https://jedalen.tuke.sk)).
+
+**Live demo:** [tuke-canteen-app.vercel.app](https://tuke-canteen-app.vercel.app) (first load may take up to 1 minute due to proxy cold start; recommended: Chrome or Safari)
 
 ## Features
 
@@ -43,7 +45,11 @@ src/
   types.ts              # Domain types
   constants.ts          # Canteen list, allergen definitions
   theme.ts              # Light/dark theme system
+proxy/                  # CORS proxy server (Express.js)
 assets/                 # App icons, splash screen, TUKE logo
+metro.config.js         # Metro bundler config (excludes proxy/)
+vercel.json             # Vercel rewrite rules for SPA routing
+eas.json               # EAS Build profiles
 ```
 
 ## Getting Started
@@ -61,6 +67,27 @@ npx expo start
 ```
 
 Scan the QR code with Expo Go or press `a` for Android / `i` for iOS emulator.
+
+### Run on Web (local)
+
+```bash
+cd proxy && npm install && npm start &   # start CORS proxy on port 3001
+npx expo start --web                     # start Expo web
+```
+
+## Deployment
+
+### Web app (Vercel)
+
+The web app is deployed on Vercel at [tuke-canteen-app.vercel.app](https://tuke-canteen-app.vercel.app). `vercel.json` rewrites all routes to `/index.html` for client-side navigation.
+
+### CORS proxy (Render.com)
+
+Browsers block direct requests to `jedalen.tuke.sk` (no CORS headers). The Express.js proxy in `proxy/` is deployed on Render.com at `tuke-canteen-proxy.onrender.com`. On web, `menuClient.ts` routes requests through this proxy automatically. On mobile (Android/iOS), requests go directly to the canteen server.
+
+The Render.com free tier sleeps after inactivity — the first request after idle can take up to ~1 minute. Subsequent requests are fast.
+
+See [proxy/README.md](proxy/README.md) for deployment instructions.
 
 ## Lint and Type Check
 

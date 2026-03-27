@@ -9,7 +9,7 @@ import { ErrorState } from "../../components/ErrorState";
 import { MenuSection } from "../../components/MenuSection";
 import { useSettings } from "../../src/services/settingsContext";
 import { useActiveCanteen } from "../../src/services/activeCanteenContext";
-import { getNextWorkdays } from "../../src/utils/format";
+import { getNextWorkdays, toISODate } from "../../src/utils/format";
 import { Screen } from "../../components/Screen";
 import { useAppTheme } from "../../src/theme";
 
@@ -31,8 +31,7 @@ function reorderSections(sections: MenuSectionType[]): MenuSectionType[] {
 }
 
 function todayKey() {
-  const d = new Date();
-  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+  return toISODate(new Date());
 }
 
 export default function MenuScreen() {
