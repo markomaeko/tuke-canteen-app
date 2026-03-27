@@ -2,7 +2,7 @@ import { Platform } from "react-native";
 import type { ISODate } from "../types";
 import type { CanteenSlug } from "../constants";
 
-const FETCH_TIMEOUT_MS = 15_000;
+const FETCH_TIMEOUT_MS = Platform.OS === "web" ? 60_000 : 15_000;
 
 /** URL CORS proxy servera pre web. Po nasadení na Render.com zmeň na produkčnú URL. */
 const WEB_PROXY_BASE_URL = "https://tuke-canteen-proxy.onrender.com";
